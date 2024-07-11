@@ -1,5 +1,5 @@
 import React from 'react';
-import useTeacherData from './util.js';
+import useTeacherData from '../util.js';
 
 const Appp = () => {
   const teacher = useTeacherData();
