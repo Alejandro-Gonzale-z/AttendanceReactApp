@@ -12,12 +12,24 @@ export const getTeacher = async (email) => {
   }
 };
 
+//retrieves a specific teachers classes using their teacher_id
 export const getClasses = async (teacher_id) => {
   try {
-    const response = await axios.get(`${baseURL}/read/class/${teacher_id}`)
-    return response.data
+    const response = await axios.get(`${baseURL}/read/class/${teacher_id}`);
+    return response.data;
   } catch (error) {
     console.error('Error fetching classes:', error);
+    throw error;
+  }
+};
+
+//retrieves all students in a class
+export const getStudents = async (class_id) => {
+  try {
+    const response = await axios.get(`${baseURL}/read/students/${class_id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching students:', error);
     throw error;
   }
 };
