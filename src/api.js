@@ -33,3 +33,13 @@ export const getStudents = async (class_id) => {
     throw error;
   }
 };
+
+export const deleteClass = async (class_id) => {
+  try {
+    const response = await axios.delete(`${baseURL}/delete/class/${class_id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting class:', error);
+    throw error;
+  }
+}

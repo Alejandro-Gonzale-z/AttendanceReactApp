@@ -1,17 +1,16 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/landingPage';
-import Classpage from './pages/classpage';
-import ManagePage from './pages/managePage';
-
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/landingPage";
+import ClassPage from "./pages/classPage";
+import ManagePage from "./pages/managePage";
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/classpage" element={<Classpage />} />
-        <Route path="/managePage" element={<ManagePage />} />
+        <Route path="/classpage" element={<ClassPage />} />
+        <Route path="/managepage" element={<ManagePage />} />
       </Routes>
     </div>
   );

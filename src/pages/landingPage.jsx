@@ -5,6 +5,8 @@ import axios from "axios";
 import { useTeacherData } from "../util";
 import Cookies from "js-cookie";
 import SideMenu from "../components/SideMenu"; // Import SideMenu from components
+import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -66,6 +68,8 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const teacher = useTeacherData(email);
+  const navigate = useNavigate();
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -73,6 +77,7 @@ const LoginForm = () => {
       if (teacher.email === email && teacher.password === password) {
         console.log("Successful Login");
         Cookies.set("Teacher", JSON.stringify(teacher));
+        navigate("/classpage")
       } else if (teacher.email === email) {
         console.log("Wrong Password");
       } else {
@@ -84,11 +89,6 @@ const LoginForm = () => {
 
     setEmail("");
     setPassword("");
-    const TestCookies = Cookies.get('Teacher');
-    if (TestCookies) {
-      const test = JSON.parse(TestCookies);
-      console.log("COOKIES:", test.email);
-    }
   };
 
   return (
@@ -134,7 +134,6 @@ const SignUpForm = () => {
         { first_name, last_name, email, password }
       );
       const user = response.data[0];
-      console.log(user);
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -194,15 +193,6 @@ const MenuButton = ({ toggleMenu }) => (
   >
     ☰
   </button>
-);
-
-const Footer = () => (
-  <footer className="w-full text-center py-1 bg-gray-800 text-white">
-    <p>
-      &copy; {new Date().getFullYear()} DigitalAttendanceAppTitle - Group 5. All
-      rights reserved.
-    </p>
-  </footer>
 );
 
 export default LandingPage;
