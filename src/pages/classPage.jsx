@@ -5,6 +5,7 @@ import { useClassData } from "../util";
 import axios from "axios";
 import { deleteClass } from "../api";
 import Footer from "../components/Footer"
+import { attendancePage } from "react-router-dom";
 
 function Classpage() {
   const cookies = Cookies.get("Teacher");
@@ -76,7 +77,9 @@ const ClassList = ({ classData, manageClasses }) => {
             key={data.class_id}
             className="flex justify-between items-center px-4 py-2 bg-gray-100 rounded"
           >
-            <span>{data.class_name}</span>
+            <attendancePage to={`/attendance/${data.class_name}`}>
+              {data.class_name}
+            </attendancePage>
             {manageClasses && (
               <div className="flex space-x-2">
                 <button

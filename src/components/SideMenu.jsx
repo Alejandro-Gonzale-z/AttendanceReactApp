@@ -16,9 +16,7 @@ const SideMenu = ({ menuOpen, toggleMenu }) => {
         menuOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform`}
     >
-      <button onClick={toggleMenu} className="text-xl">
-        ×
-      </button>
+      <button onClick={toggleMenu} className="text-xl" />
       <nav className="mt-4">
         <Link to="/" className="py-2 flex items-center hover:bg-gray-600">
           Home
