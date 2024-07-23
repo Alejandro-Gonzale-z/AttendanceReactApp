@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/classpage" element={<ClassPage />} />
         <Route path="/managepage" element={<ManagePage />} />
-        <Route path="/attendance/:className" element={<AttendancePage />} />
+        <Route path="/attendance" element={<AttendancePage />} />
       </Routes>
     </div>
   );

@@ -4,8 +4,10 @@ import Cookies from "js-cookie";
 import { useClassData } from "../util";
 import axios from "axios";
 import { deleteClass } from "../api";
-import Footer from "../components/Footer"
-import { attendancePage } from "react-router-dom";
+import Footer from "../components/Footer";
+import AttendancePage from "./attendancePage";
+import {useNavigate} from 'react-router-dom';
+
 
 function Classpage() {
   const cookies = Cookies.get("Teacher");
@@ -47,21 +49,13 @@ const Header = ({ teacher }) => {
 const Description = () => (
   <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-4xl text-center md:text-left my-4">
     <p>To view attendance and mark people in and out, click the class name.</p>
-    <p>To add students or delete a class, use Manage Classes.</p>
-    <p>To create a class, click create class.</p>
+    <p>To delete a class, use Manage Class.</p>
+    <p>To create a class, use Create Class.</p>
   </div>
 );
 
 const ClassList = ({ classData, manageClasses }) => {
-  const handleAddStudent = (className) => {
-    alert(`Add student to ${className}`);
-    // Implement the logic to add a student
-  };
-
-  const handleDeleteStudent = (className) => {
-    alert(`Delete student from ${className}`);
-    // Implement the logic to delete a student
-  };
+  const navigate = useNavigate();
 
   const handleDeleteClass = async (className, class_id) => {
     alert(`Deleting class ${className}`);
@@ -69,34 +63,27 @@ const ClassList = ({ classData, manageClasses }) => {
       window.location.reload();
   };
 
+  const handleClassClick = (data) => {
+    // console.log(data.data);
+    navigate('/attendance', {state: {classData: data.data}});
+  }
+
   return (
     <ul className="space-y-2">
       {classData &&
         classData.map((data) => (
           <li
             key={data.class_id}
-            className="flex justify-between items-center px-4 py-2 bg-gray-100 rounded"
+            className="flex justify-between items-center px-4 py-4 bg-gray-100 rounded"
           >
-            <attendancePage to={`/attendance/${data.class_name}`}>
+            <span onClick={() => handleClassClick({data})} style={{cursor: 'pointer'}}>
               {data.class_name}
-            </attendancePage>
+            </span>
             {manageClasses && (
               <div className="flex space-x-2">
                 <button
-                  onClick={() => handleAddStudent(data.class_name)}
-                  className="px-2 py-1 bg-blue-500 text-white rounded"
-                >
-                  Add Student
-                </button>
-                <button
-                  onClick={() => handleDeleteStudent(data.class_name)}
-                  className="px-2 py-1 bg-yellow-500 text-white rounded"
-                >
-                  Delete Student
-                </button>
-                <button
                   onClick={() => handleDeleteClass(data.class_name, data.class_id)}
-                  className="px-2 py-1 bg-red-500 text-white rounded"
+                  className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700"
                 >
                   Delete Class
                 </button>
@@ -149,7 +136,7 @@ const ClassInfo = ({ teacher }) => {
         <button
           onClick={handleMyClasses}
           className={`px-4 py-2 rounded ${
-            manageClasses ? "bg-green-500 text-white" : "bg-gray-300"
+            manageClasses ? "bg-green-500 text-white hover:bg-green-600" : "bg-gray-300 hover:bg-gray-400"
           }`}
         >
           My Classes
@@ -157,10 +144,10 @@ const ClassInfo = ({ teacher }) => {
         <button
           onClick={handleManageClasses}
           className={`px-4 py-2 rounded ${
-            manageClasses ? "bg-gray-300" : "bg-green-500 text-white"
+            manageClasses ? "bg-gray-300 hover:bg-gray-400" : "bg-green-500 text-white hover:bg-green-600"
           }`}
         >
-          Manage Classes
+          Manage Class
         </button>
         <button
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"

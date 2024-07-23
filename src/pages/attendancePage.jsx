@@ -1,98 +1,259 @@
 // AttendancePage.jsx
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useLocation } from "react-router-dom";
+import { deleteStudent} from "../api";
 
 function AttendancePage() {
-  const { className } = useParams();
+  const location = useLocation();
+  const { classData } = location.state;
+  const [option, setOption] = useState("");
   const [students, setStudents] = useState([]);
-  const [attendance, setAttendance] = useState({});
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
+  if (students === undefined) {
+    return <p>Loading...</p>;
+  }
+  
   useEffect(() => {
-    console.log("Class Name:", className); // Debug log
-    // Fetch students for the class
-    async function fetchStudents() {
+    const fetchStudents = async () => {
       try {
-        const response = await axios.get(`/api/students?class=${className}`);
+        const response = await axios.get(`https://fatsz9vmjf.execute-api.us-east-1.amazonaws.com/read/students/${classData.class_id}`);
         setStudents(response.data);
       } catch (error) {
-        console.error("Error fetching students:", error);
+        console.error("Error fetching Students:", error);
       }
+    };
+    // Only fetch data if class_id is present
+    if (classData.class_id) {
+      fetchStudents();
     }
+  }, [classData.class_id]); // Depend on class_id to refetch when it changes
 
-    fetchStudents();
-  }, [className]);
-
-  const handleAttendanceChange = (studentId, status) => {
-    setAttendance((prev) => ({
-      ...prev,
-      [studentId]: status,
-    }));
+  const handleOptions = (opt) => {
+    setOption(opt);
   };
 
-  const handleSubmit = async () => {
-    // Submit attendance data
-    try {
-      await axios.post(`/api/attendance?class=${className}&date=${selectedDate.toISOString()}`, attendance);
-      alert("Attendance submitted successfully");
-    } catch (error) {
-      console.error("Error submitting attendance:", error);
-    }
-  };
+  if (option === "C") {
+    console.log("navigating to report");
+  }
+
+  console.log(students);
 
   return (
-    <div className="attendance-page bg-gray-100 p-4 rounded-lg shadow-md max-w-4xl mx-auto">
-      <header className="text-center my-4">
-        <h1 className="text-3xl font-bold">Attendance for {className}</h1>
-      </header>
-      <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4 text-center">
-        <label className="block mb-2 text-lg font-medium">Select Date</label>
-        <DatePicker
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          dateFormat="MMM d, yyyy"
-          className="bg-white p-2 rounded border"
-        />
-      </div>
-      <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4 text-center">
-        <label className="block mb-2 text-lg font-medium">Mark student present or absent</label>
-        <ul className="space-y-2">
-          {students.map((student) => (
-            <li key={student.id} className="flex justify-between items-center bg-white p-2 rounded shadow">
-              <span>{student.name}</span>
-              <div>
-                <label className="mr-4">
-                  <input
-                    type="checkbox"
-                    checked={attendance[student.id] === "present"}
-                    onChange={() => handleAttendanceChange(student.id, "present")}
-                  />
-                  Present
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={attendance[student.id] === "absent"}
-                    onChange={() => handleAttendanceChange(student.id, "absent")}
-                  />
-                  Absent
-                </label>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <button
-        onClick={handleSubmit}
-        className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-      >
-        Submit Attendance
-      </button>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-grow bg-gray-100 flex flex-col items-center p-4">
+        <div className="mx-auto w-full max-w-4xl md:space-x-4">
+          <Header name={classData.class_name} />
+          <Description />
+          <Options handleOptions={handleOptions} />
+          <StudentInfo class_id={classData.class_id} students={students} setStudents={setStudents} option={option} />
+        </div>
+      </main>
     </div>
   );
 }
+
+const Header = ({ name }) => {
+  return (
+    <header className="text-center my-4">
+      <h1 className="text-3xl font-bold">{name}</h1>
+    </header>
+  );
+};
+
+const Description = () => (
+  <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-4xl text-center md:text-left my-4">
+    <p>To add or delete students, use Manage Students.</p>
+    <p>To take attendance, click Take Attendance.</p>
+    <p>To generate an attendance report, use View Report</p>
+    <p>
+      Once you've finished managing students or taking attendance, click the
+      button again to complete the action.
+    </p>
+  </div>
+);
+
+//there are three buttons therefore there are 3 options that update the studentInfo component
+//these three options are passed to parent component and then passed to studentInfo component
+//'A' == manage students is clicked 
+//'B' == take attendance is clicked
+const Options = ({ handleOptions }) => {
+  const [manageClick, setManageClick] = useState(false);
+  const [attendanceClick, setAttendanceClick] = useState(false);
+
+  const handleManageClick = () => {
+    setManageClick((prevManageClick) => {
+      const newManageClick = !prevManageClick;
+      if (newManageClick) {
+        handleOptions("A");
+      } else {
+        handleOptions("E");
+      }
+      return newManageClick;
+    });
+    setAttendanceClick(false);
+  };
+
+  const handleAttendanceClick = () => {
+    setAttendanceClick((prevAttendanceClick) => {
+      const newAttendanceClick = !prevAttendanceClick;
+      if (newAttendanceClick) {
+        handleOptions("B");
+      } else {
+        handleOptions("D");
+      }
+      return newAttendanceClick;
+    });
+    setManageClick(false);
+  };
+
+  return (
+    <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-4xl my-4">
+      <div className="flex justify-between items-center py-4">
+        <button
+          className={`px-5 py-3 rounded  ${
+            manageClick ? "bg-blue-500" : "bg-blue-300"
+          }`}
+          onClick={handleManageClick}
+        >
+          Manage Students
+        </button>
+        <button
+          className={`px-5 py-3 rounded  ${
+            attendanceClick ? "bg-blue-500" : "bg-blue-300"
+          }`}
+          onClick={handleAttendanceClick}
+        >
+          Take Attendance
+        </button>
+        <button
+          className="bg-blue-300 px-5 py-3 rounded hover:bg-blue-500"
+          onClick={() => handleOptions("C")}
+        >
+          View Report
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const PickDate = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  return (
+    <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4 text-center w-full">
+      <label className="block mb-2 text-lg font-medium">Select Date</label>
+      <DatePicker
+        selected={selectedDate}
+        onChange={(date) => setSelectedDate(date)}
+        dateFormat="MMM d, yyyy"
+        className="bg-white p-2 rounded border"
+      />
+    </div>
+  );
+};
+
+const StudentInfo = ({ class_id, students, setStudents, option }) => {
+  let optA = null;
+  let optB = null;
+  const [newStudentFirst, setNewStudentFirst] = useState("");
+  const [newStudentLast, setNewStudentLast] = useState("");
+
+  if (option === "A") {
+    optA = option;
+  }
+
+  if (option === "B") {
+    optB = option;
+  }
+
+  const handleAddClick = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://fatsz9vmjf.execute-api.us-east-1.amazonaws.com/create/student",
+        { first_name: newStudentFirst, last_name: newStudentLast, class_id: class_id }
+      );
+      setStudents(prevStudents => [...prevStudents,response.data[0]]);
+      setNewStudentFirst("");
+      setNewStudentLast("");
+    } catch (error) {
+      console.error("Error creating student:", error);
+    }
+  };
+
+  const handleDeleteClick = async (student_first, student_last, student_id) => {
+    alert(`Deleting student ${student_first} ${student_last}`);
+    const del = await deleteStudent(student_id);
+    setStudents(students.filter(student => student.student_id !== student_id));
+    console.log(students);
+  };
+
+  return (
+    <div className="w-full">
+      {optB && <PickDate />}
+      <div className="bg-white p-4 rounded-lg shadow-md mb-4 text-center w-full">
+        <div className="flex justify-between items-center py-4">
+          <h1 className="text-3xl">My Students</h1>
+        </div>
+        <ul className="space-y-2">
+          {students.map((student) => (
+            <li
+              key={student.student_id}
+              className="flex justify-between items-center bg-white p-2 rounded shadow"
+            >
+              <span>
+                {student.first_name} {student.last_name}
+              </span>
+              {optA && (
+                <div>
+                  <button
+                    className="h-8 px-8 bg-red-500 text-white rounded hover:bg-red-700"
+                    onClick={() => handleDeleteClick(student.first_name,student.last_name,student.student_id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+              {optB && (
+                <div>
+                  <button className="h-8 mr-2 px-5 bg-green-500 text-white rounded hover:bg-green-600">
+                    Present
+                  </button>
+                  <button className="h-8 ml-2 px-5 bg-red-500 text-white rounded hover:bg-red-700">
+                    Absent
+                  </button>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+        {optA && (
+          <form className="flex justify-between" onSubmit={handleAddClick}>
+            <input
+              className="flex justify-between items-center px-4 py-2 bg-gray-100 rounded mt-2 w-3/8"
+              placeholder="New Student First Name"
+              value={newStudentFirst}
+              onChange={(e) => setNewStudentFirst(e.target.value)}
+            />
+            <input 
+              className="flex justify-between items-center px-4 py-2 bg-gray-100 rounded mt-2 w-3/8"
+              placeholder="New Student Last Name"
+              value={newStudentLast}
+              onChange={(e) => setNewStudentLast(e.target.value)}
+            />
+            <button 
+              type="submit"
+              className="px-4 py-2 bg-green-500 text-white rounded mt-2 hover:bg-green-600"
+            >
+              Add Student
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default AttendancePage;

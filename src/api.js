@@ -43,3 +43,13 @@ export const deleteClass = async (class_id) => {
     throw error;
   }
 }
+
+export const deleteStudent = async (student_id) => {
+  try{
+    const response = await axios.delete(`${baseURL}/delete/student/${student_id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting student:', error);
+    throw error;
+  }
+}
