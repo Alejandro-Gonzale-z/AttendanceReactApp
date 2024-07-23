@@ -4,7 +4,7 @@ import Logo from "../components/logo1.png";
 import axios from "axios";
 import { useTeacherData } from "../util";
 import Cookies from "js-cookie";
-import SideMenu from "../components/SideMenu"; // Import SideMenu from components
+import SideMenu from "../components/SideMenu";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 
@@ -41,16 +41,12 @@ const Header = () => (
 const Description = () => (
   <div className="flex flex-col items-center md:flex-row md:items-start space-x-0 md:space-x-4 gap-4 w-full max-w-4xl">
     <section className="flex-shrink-0">
-      <img
-        className="w-48 h-72 rounded-lg shadow-md outline-2 outline"
-        src={Logo}
-        alt="Logo"
-      />
+      <img className="w-48 h-72 rounded-lg shadow-md outline-2 outline" src={Logo} alt="Logo" />
     </section>
     <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:text-left my-4">
       <p className="mb-4 font-semibold">
-        Our all-in-one app provides teachers with the ultimate tool for managing
-        student attendance and viewing detailed reports. <br /> <br />
+        Our all-in-one app provides teachers with the ultimate tool for managing student attendance and viewing detailed reports.
+        <br /><br />
         Here's what you can do:
       </p>
       <ul className="list-disc list-inside">
@@ -67,33 +63,36 @@ const Description = () => (
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); // Added error message state
   const teacher = useTeacherData(email);
   const navigate = useNavigate();
-  
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      if (teacher.email === email && teacher.password === password) {
+      if (teacher && teacher.email === email && teacher.password === password) {
         console.log("Successful Login");
         Cookies.set("Teacher", JSON.stringify(teacher));
-        navigate("/classList")
-      } else if (teacher.email === email) {
-        console.log("Wrong Password");
+        navigate("/classList");
+        setErrorMessage(''); // Clear any error messages
       } else {
-        console.log("Account does not exist, sign-up instead!");
+        setErrorMessage("Invalid email or password."); // General error message
       }
     } catch (error) {
-      console.log("Account does not exist, sign-up instead!");
+      console.error("Login failed: ", error);
+      setErrorMessage("Login failed. Please try again!"); // Set error message for exceptions
     }
-
-    setEmail("");
-    setPassword("");
   };
 
   return (
     <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:max-w-md my-2">
       <h2 className="text-xl font-bold mb-4">Login</h2>
+      {errorMessage && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <strong className="font-bold">Error: </strong>
+          <span className="block sm:inline">{errorMessage}</span>
+        </div>
+      )}
       <form className="flex flex-col space-y-4" onSubmit={handleLogin}>
         <input
           value={email}
@@ -133,7 +132,8 @@ const SignUpForm = () => {
         "https://fatsz9vmjf.execute-api.us-east-1.amazonaws.com/create/teacher",
         { first_name, last_name, email, password }
       );
-      const user = response.data[0];
+      const user = response.data;
+      console.log("Signup Successful", user);
       setFirstName("");
       setLastName("");
       setEmail("");
