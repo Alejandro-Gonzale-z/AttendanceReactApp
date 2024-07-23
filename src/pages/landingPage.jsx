@@ -77,7 +77,7 @@ const LoginForm = () => {
       if (teacher.email === email && teacher.password === password) {
         console.log("Successful Login");
         Cookies.set("Teacher", JSON.stringify(teacher));
-        navigate("/classpage")
+        navigate("/classList")
       } else if (teacher.email === email) {
         console.log("Wrong Password");
       } else {

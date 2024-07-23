@@ -22,7 +22,7 @@ const SideMenu = ({ menuOpen, toggleMenu }) => {
           Home
         </Link>
         <Link
-          to="/classpage"
+          to="/classList"
           className="py-2 flex items-center hover:bg-gray-600"
         >
           Class Page

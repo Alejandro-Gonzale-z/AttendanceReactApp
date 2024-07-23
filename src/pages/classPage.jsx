@@ -6,10 +6,9 @@ import axios from "axios";
 import { deleteClass } from "../api";
 import Footer from "../components/Footer";
 import AttendancePage from "./attendancePage";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-
-function Classpage() {
+function Classespage() {
   const cookies = Cookies.get("Teacher");
   const teacher = JSON.parse(cookies);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -59,30 +58,34 @@ const ClassList = ({ classData, manageClasses }) => {
 
   const handleDeleteClass = async (className, class_id) => {
     alert(`Deleting class ${className}`);
-      const del = await deleteClass(class_id);
-      window.location.reload();
+    const del = await deleteClass(class_id);
+    window.location.reload();
   };
 
   const handleClassClick = (data) => {
-    // console.log(data.data);
-    navigate('/attendance', {state: {classData: data.data}});
-  }
+    navigate("/attendance", { state: { classData: data.data } });
+  };
 
   return (
-    <ul className="space-y-2">
+    <ul className="space-y-3">
       {classData &&
         classData.map((data) => (
           <li
             key={data.class_id}
-            className="flex justify-between items-center px-4 py-4 bg-gray-100 rounded"
+            className="flex justify-between items-center px-4 py-4 bg-gray-100 rounded h-12 hover:bg-gray-300"
           >
-            <span onClick={() => handleClassClick({data})} style={{cursor: 'pointer'}}>
+            <span
+              onClick={() => handleClassClick({ data })}
+              style={{ cursor: "pointer" }}
+            >
               {data.class_name}
             </span>
             {manageClasses && (
               <div className="flex space-x-2">
                 <button
-                  onClick={() => handleDeleteClass(data.class_name, data.class_id)}
+                  onClick={() =>
+                    handleDeleteClass(data.class_name, data.class_id)
+                  }
                   className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700"
                 >
                   Delete Class
@@ -136,7 +139,9 @@ const ClassInfo = ({ teacher }) => {
         <button
           onClick={handleMyClasses}
           className={`px-4 py-2 rounded ${
-            manageClasses ? "bg-green-500 text-white hover:bg-green-600" : "bg-gray-300 hover:bg-gray-400"
+            manageClasses
+              ? "bg-green-500 text-white hover:bg-green-600"
+              : "bg-gray-300 hover:bg-gray-400"
           }`}
         >
           My Classes
@@ -144,7 +149,9 @@ const ClassInfo = ({ teacher }) => {
         <button
           onClick={handleManageClasses}
           className={`px-4 py-2 rounded ${
-            manageClasses ? "bg-gray-300 hover:bg-gray-400" : "bg-green-500 text-white hover:bg-green-600"
+            manageClasses
+              ? "bg-gray-300 hover:bg-gray-400"
+              : "bg-green-500 text-white hover:bg-green-600"
           }`}
         >
           Manage Class
@@ -186,4 +193,4 @@ const MenuButton = ({ toggleMenu }) => (
   </button>
 );
 
-export default Classpage;
+export default Classespage;
