@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useLocation } from "react-router-dom";
 import { deleteStudent } from "../api";
 import SideMenu from "../components/SideMenu";
 import Footer from "../components/Footer";
@@ -11,16 +10,16 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function AttendancePage() {
-  const location = useLocation();
   const navigate = useNavigate();
-  const { classData } = location.state;
+  const cookies = Cookies.get("classData");
+  const classData = cookies ? JSON.parse(cookies) : null; 
   const [option, setOption] = useState("");
   const [students, setStudents] = useState([]);
-
+  const [menuOpen, setMenuOpen] = useState(false);
+  
   if (students === undefined) {
     return <p>Loading...</p>;
   }
-
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -45,6 +44,10 @@ function AttendancePage() {
     navigate("/attendanceReport", { state: { class_id: classData.class_id } });
   }
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow bg-gray-100 flex flex-col items-center p-4">
@@ -59,6 +62,8 @@ function AttendancePage() {
             option={option}
           />
         </div>
+        <SideMenu menuOpen={menuOpen} toggleMenu={toggleMenu} />
+        <MenuButton toggleMenu={toggleMenu} />
       </main>
       <Footer />
     </div>
@@ -325,5 +330,14 @@ const StudentInfo = ({ class_id, students, setStudents, option }) => {
     </div>
   );
 };
+
+const MenuButton = ({ toggleMenu }) => (
+  <button
+    onClick={toggleMenu}
+    className="fixed top-4 left-4 bg-gray-700 text-white p-2 rounded-md"
+  >
+    ☰
+  </button>
+);
 
 export default AttendancePage;

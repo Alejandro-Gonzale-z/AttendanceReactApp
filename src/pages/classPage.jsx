@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function Classespage() {
   const cookies = Cookies.get("Teacher");
-  const teacher = JSON.parse(cookies);
+  const teacher = cookies ? JSON.parse(cookies) : null;
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -63,7 +63,8 @@ const ClassList = ({ classData, manageClasses }) => {
   };
 
   const handleClassClick = (data) => {
-    navigate("/attendance", { state: { classData: data.data } });
+    Cookies.set("classData", JSON.stringify(data.data));
+    navigate("/attendance");
   };
 
   return (

@@ -4,9 +4,9 @@ import Cookies from "js-cookie";
 
 const SideMenu = ({ menuOpen, toggleMenu }) => {
   const navigate = useNavigate();
-
   const handleLogout = () => {
     Cookies.remove("Teacher");
+    Cookies.remove("classData");
     navigate("/");
   };
 
