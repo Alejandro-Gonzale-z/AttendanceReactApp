@@ -158,7 +158,7 @@ const Description = ({ name, isVisible }) => {
 
           <span>
             <ul><strong>Viewing the Report:</strong></ul>
-            <ul>- click on  <button disabled className="py-1 px-1 bg-indigo-600 rounded-md shadow-md text-white">View Report</button> to visist the report page and view student and class statistics </ul>
+            <ul>- click on  <button disabled className="py-1 px-1 bg-indigo-600 rounded-md shadow-md text-white">View Report</button> to visit the report page and view student and class statistics </ul>
           </span>
         </li>
       </ul>
@@ -251,8 +251,12 @@ const StudentInfo = ({ class_id, students, setStudents, option, isVisible, redXO
   const [newStudentFirst, setNewStudentFirst] = useState("");
   const [newStudentLast, setNewStudentLast] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [presentAnimationPlaying, setPresentAnimationPlaying] = useState(Array(students.length).fill(false));
+  const [absentAnimationPlaying, setAbsentAnimationPlaying] = useState(Array(students.length).fill(false));
+  const [attendanceDisabled, setAttendanceDisabled] = useState(Array(students.length).fill(false));
   const redXRefs = useRef([]);
   const greenCheckRefs = useRef([]);
+
   let optA = null;
   let optB = null;
 
@@ -310,10 +314,22 @@ const StudentInfo = ({ class_id, students, setStudents, option, isVisible, redXO
       );
       console.log(response.data[0]);
 
-      if (type === 'present' && greenCheckRefs.current[index]) {
-        greenCheckRefs.current[index].play();
-      } else if (type === 'absent' && redXRefs.current[index]) {
-        redXRefs.current[index].play();
+      if (type === 'present') {
+        const newAnimationPlaying = presentAnimationPlaying.slice();
+        newAnimationPlaying[index] = !newAnimationPlaying[index];
+        setPresentAnimationPlaying(newAnimationPlaying);
+
+        const newAttendanceDisabled = attendanceDisabled.slice();
+        newAttendanceDisabled[index] = !newAttendanceDisabled[index];
+        setAttendanceDisabled(newAttendanceDisabled);
+      } else if (type === 'absent') {
+        const newAnimationPlaying = absentAnimationPlaying.slice();
+        newAnimationPlaying[index] = !newAnimationPlaying[index];
+        setAbsentAnimationPlaying(newAnimationPlaying);
+
+        const newAttendanceDisabled = attendanceDisabled.slice();
+        newAttendanceDisabled[index] = !newAttendanceDisabled[index];
+        setAttendanceDisabled(newAttendanceDisabled);
       }
     } catch (error) {
       console.error("Error creating attendance:", error);
@@ -367,7 +383,8 @@ const StudentInfo = ({ class_id, students, setStudents, option, isVisible, redXO
               )}
               {optB && (
                 <div>
-                  <button
+                  <button 
+                    disabled={attendanceDisabled[index]}
                     className="h-8 mr-2 px-2 bg-green-700 text-white rounded hover:bg-green-600 inline-flex items-center"
                     onClick={() => handleAttendanceClick(student.student_id, 1, index, 'present')}
                   >
@@ -376,11 +393,14 @@ const StudentInfo = ({ class_id, students, setStudents, option, isVisible, redXO
                       height={17}
                       width={17}
                       isClickToPauseDisabled={true}
+                      isStopped={!presentAnimationPlaying[index]}
+                      isPause={!presentAnimationPlaying[index]}
                       ref={(el) => greenCheckRefs.current[index] = el}
                     />
                     <span className="ml-1">Present</span>
                   </button>
-                  <button
+                  <button 
+                    disabled={attendanceDisabled[index]}
                     className="h-8 ml-2 px-2 bg-red-800 text-white rounded hover:bg-red-700 inline-flex items-center"
                     onClick={() => handleAttendanceClick(student.student_id, 0, index, 'absent')}
                   >
@@ -389,6 +409,8 @@ const StudentInfo = ({ class_id, students, setStudents, option, isVisible, redXO
                       height={17}
                       width={17}
                       isClickToPauseDisabled={true}
+                      isStopped={!absentAnimationPlaying[index]}
+                      isPause={!absentAnimationPlaying[index]}
                       ref={(el) => redXRefs.current[index] = el}
                     />
                     <span className="ml-1">Absent</span>
