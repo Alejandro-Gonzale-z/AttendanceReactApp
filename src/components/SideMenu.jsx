@@ -17,19 +17,19 @@ const SideMenu = ({ menuOpen, toggleMenu }) => {
       } transition-transform`}
     >
       <button onClick={toggleMenu} className="text-xl" />
-      <nav className="mt-4">
-        <Link to="/" className="py-2 flex items-center hover:bg-gray-600">
+      <nav className="mt-10 text-center">
+        <Link to="/" className="py-5 flex justify-center text-xl items-center hover:bg-gray-600 hover:rounded-xl">
           Home
         </Link>
         <Link
           to="/classList"
-          className="py-2 flex items-center hover:bg-gray-600"
+          className="py-5 flex justify-center items-center text-xl hover:bg-gray-600 hover:rounded-xl"
         >
           Class Page
         </Link>
         <button
           onClick={handleLogout}
-          className="py-2 flex items-center hover:bg-gray-600 w-full text-left"
+          className="py-5 flex justify-center items-center text-xl hover:bg-gray-600 hover:rounded-xl w-full text-left"
         >
           Logout
         </button>

@@ -41,7 +41,7 @@ const Header = () => (
 const Description = () => (
   <div className="flex flex-col items-center md:flex-row md:items-start space-x-0 md:space-x-4 gap-4 w-full max-w-4xl">
     <section className="flex-shrink-0">
-      <img className="w-48 h-72 rounded-lg shadow-md outline-2 outline" src={Logo} alt="Logo" />
+      <img className="w-48 h-72 rounded-lg shadow-md outline-2 outline mt-7" src={Logo} alt="Logo" />
     </section>
     <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:text-left my-4">
       <p className="mb-4 font-semibold">
@@ -49,12 +49,39 @@ const Description = () => (
         <br /><br />
         Here's what you can do:
       </p>
-      <ul className="list-disc list-inside">
-        <li>Efficiently manage attendance for one or multiple classes.</li>
-        <li>Track student presence and absences with ease.</li>
-        <li>Generate and view comprehensive attendance reports.</li>
-        <li>Access detailed insights on student attendance patterns.</li>
-        <li>Improve classroom management.</li>
+      <ul className="list-outside">
+        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+          </svg>
+          <span>
+            Efficiently manage attendance for one or multiple classes.
+          </span>
+        </li>
+        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+          </svg>
+          <span>Track student presence and absences with ease.</span>
+        </li>
+        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+          </svg>
+          <span>Generate and view comprehensive attendance reports.</span>
+        </li>
+        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+          </svg>
+          <span>Access detailed insights on student attendance patterns.</span>
+        </li>
+        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+          </svg>
+          <span>Improve classroom management.</span>
+        </li>
       </ul>
     </section>
   </div>
