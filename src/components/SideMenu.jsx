@@ -1,9 +1,20 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import Lottie from 'react-lottie';
+import animationData from "../lotties/profilePic.json";
 
 const SideMenu = ({ menuOpen, toggleMenu }) => {
   const navigate = useNavigate();
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
 
   const handleLogout = () => {
     Cookies.remove("Teacher");
@@ -18,6 +29,12 @@ const SideMenu = ({ menuOpen, toggleMenu }) => {
     >
       <button onClick={toggleMenu} className="text-xl" />
       <nav className="mt-10 text-center">
+        <Lottie 
+        options={defaultOptions}
+          height={75}
+          width={75}
+          isClickToPauseDisabled={true}
+        />
         <Link to="/" className="py-5 flex justify-center text-xl items-center hover:bg-gray-600 hover:rounded-xl">
           Home
         </Link>

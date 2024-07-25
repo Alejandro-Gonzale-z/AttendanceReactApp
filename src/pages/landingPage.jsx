@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./../index.css";
 import Logo from "../components/logo1.png";
 import axios from "axios";
@@ -7,9 +7,28 @@ import Cookies from "js-cookie";
 import SideMenu from "../components/SideMenu";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import Lottie from 'react-lottie';
+import animationData from '../lotties/greenCheckAnimation.json';
 
 function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100); // Delay for the fade-in effect
+    return () => clearTimeout(timer);
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -18,11 +37,11 @@ function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow bg-gray-100 flex flex-col items-center p-4">
-        <Header />
-        <Description />
+        <Header isVisible={isVisible} />
+        <Description isVisible={isVisible} />
         <div className="flex flex-col md:flex-row md:space-x-4 my-4 w-full max-w-4xl">
-          <LoginForm />
-          <SignUpForm />
+          <LoginForm isVisible={isVisible}/>
+          <SignUpForm isVisible={isVisible} defaultOptions={defaultOptions}/>
         </div>
         <SideMenu menuOpen={menuOpen} toggleMenu={toggleMenu} />
         <MenuButton toggleMenu={toggleMenu} />
@@ -32,62 +51,66 @@ function LandingPage() {
   );
 }
 
-const Header = () => (
-  <header className="text-center my-4">
-    <h1 className="text-3xl font-bold">DigitalAttendanceAppTitle</h1>
-  </header>
-);
+const Header = ({isVisible}) => {
+  return (
+    <header className={`text-center my-4 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <h1 className="text-3xl font-bold">DigitalAttendanceAppTitle</h1>
+    </header>
+  );
+};
 
-const Description = () => (
-  <div className="flex flex-col items-center md:flex-row md:items-start space-x-0 md:space-x-4 gap-4 w-full max-w-4xl">
-    <section className="flex-shrink-0">
-      <img className="w-48 h-72 rounded-lg shadow-md outline-2 outline mt-7" src={Logo} alt="Logo" />
-    </section>
-    <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:text-left my-4">
-      <p className="mb-4 font-semibold">
-        Our all-in-one app provides teachers with the ultimate tool for managing student attendance and viewing detailed reports.
-        <br /><br />
-        Here's what you can do:
-      </p>
-      <ul className="list-outside">
-        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
-          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-          </svg>
-          <span>
-            Efficiently manage attendance for one or multiple classes.
-          </span>
-        </li>
-        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
-          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-          </svg>
-          <span>Track student presence and absences with ease.</span>
-        </li>
-        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
-          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-          </svg>
-          <span>Generate and view comprehensive attendance reports.</span>
-        </li>
-        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
-          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-          </svg>
-          <span>Access detailed insights on student attendance patterns.</span>
-        </li>
-        <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
-          <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-          </svg>
-          <span>Improve classroom management.</span>
-        </li>
-      </ul>
-    </section>
-  </div>
-);
+const Description = ({isVisible}) => {
+  return (
+    <div className={`flex flex-col items-center md:flex-row md:items-start space-x-0 md:space-x-4 gap-4 w-full max-w-4xl transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <section className="flex-shrink-0">
+        <img className="w-48 h-72 rounded-lg shadow-md outline-2 outline mt-7" src={Logo} alt="Logo" />
+      </section>
+      <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:text-left my-4">
+        <p className="mb-4 font-semibold">
+          Our all-in-one app provides teachers with the ultimate tool for managing student attendance and viewing detailed reports.
+          <br /><br />
+          Here's what you can do:
+        </p>
+        <ul className="list-outside">
+          <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+            <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+            </svg>
+            <span>
+              Efficiently manage attendance for one or multiple classes.
+            </span>
+          </li>
+          <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+            <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+            </svg>
+            <span>Track student presence and absences with ease.</span>
+          </li>
+          <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+            <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+            </svg>
+            <span>Generate and view comprehensive attendance reports.</span>
+          </li>
+          <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+            <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+            </svg>
+            <span>Access detailed insights on student attendance patterns.</span>
+          </li>
+          <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
+            <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+            </svg>
+            <span>Improve classroom management.</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+  );
+};
 
-const LoginForm = () => {
+const LoginForm = ({isVisible}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // Added error message state
@@ -112,10 +135,10 @@ const LoginForm = () => {
   };
 
   return (
-    <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:max-w-md my-2">
+    <section className={`bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:max-w-md my-2 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <h2 className="text-xl font-bold mb-4">Login</h2>
       {errorMessage && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3 mt-3" role="alert">
           <strong className="font-bold">Error: </strong>
           <span className="block sm:inline">{errorMessage}</span>
         </div>
@@ -146,7 +169,7 @@ const LoginForm = () => {
   );
 };
 
-const SignUpForm = () => {
+const SignUpForm = ({isVisible, defaultOptions}) => {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -171,8 +194,8 @@ const SignUpForm = () => {
   };
 
   return (
-    <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:max-w-md my-2">
-      <h2 className="text-xl font-bold mb-4">Sign-Up</h2>
+    <section className={`bg-gray-200 p-4 rounded-lg shadow-md w-full md:max-w-md my-2 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <h2 className="text-xl font-bold mb-4 text-center">Sign-Up</h2>
       <form className="flex flex-col space-y-4" onSubmit={handleSignUp}>
         <input
           value={email}
@@ -204,13 +227,21 @@ const SignUpForm = () => {
         />
         <button
           type="submit"
-          className="bg-gray-700 text-white py-2 rounded hover:bg-gray-600"
+          className="bg-gray-700 text-white py-2 rounded hover:bg-gray-600 flex items-center justify-center"
         >
-          Create Account
+          <div className="flex items-center">
+            <Lottie
+              options={defaultOptions}
+              height={20} // Ensure the height matches the text
+              width={20}
+              isClickToPauseDisabled={true}
+            />
+          </div>
+          <span className="ml-2">Create Account</span>
         </button>
       </form>
     </section>
-  );
+  );  
 };
 
 const MenuButton = ({ toggleMenu }) => (
