@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import Lottie from 'react-lottie';
 import redX from '../lotties/redXAnimation.json';
 import greenCheck from '../lotties/greenCheckAnimation.json'
+import animationData from "../lotties/AttendancePage.json";
 
 function AttendancePage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -39,6 +40,15 @@ function AttendancePage() {
     loop: false,
     autoplay: false,
     animationData: greenCheck,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  const defaultoptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice"
     }
@@ -87,8 +97,13 @@ function AttendancePage() {
             name={classData.class_name}
             isVisible={isVisible}
           />
+          {/* <CoolAnimation defaultoptions={defaultoptions} /> */}
           <Description 
             name={classData.class_name} 
+            isVisible={isVisible}
+          />
+          <CoolAnimation 
+            defaultoptions={defaultoptions} 
             isVisible={isVisible}
           />
           <Options 
@@ -121,6 +136,19 @@ const Header = ({ name, isVisible }) => {
   );
 };
 
+const CoolAnimation = ({ defaultoptions, isVisible }) => {
+  return (
+    <div className={`w-full max-w-7xl items-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <Lottie
+      options={defaultoptions}
+        height={95}
+        width={700}
+        isClickToPauseDisabled={true}
+      />
+    </div>
+  );
+};
+
 const Description = ({ name, isVisible }) => {
   return (
     <div className={`bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-7xl my-4 items-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
@@ -134,7 +162,7 @@ const Description = ({ name, isVisible }) => {
             <ul><strong>Managing Students:</strong> </ul>
             <ul>- Click on <button disabled className="py-1 px-1 bg-cyan-600 rounded-md shadow-md text-white">Manage Students</button> to enter the menu</ul>
             <ul>- Type in the <strong>Student's first and last name</strong> and click <button disabled className="py-1 px-1 bg-green-500 rounded-md shadow-md text-white">Add Student</button> to save a student to the class</ul>
-            <ul>- click <button disabled className="py-1 px-1 bg-red-500 rounded-md shadow-md text-white">Delete</button> to delete a student from the class</ul>
+            <ul>- Click <button disabled className="py-1 px-1 bg-red-500 rounded-md shadow-md text-white">Delete</button> to delete a student from the class</ul>
           </span>
         </li>
       </ul>
@@ -145,7 +173,7 @@ const Description = ({ name, isVisible }) => {
           </svg>
           <span>
             <ul><strong>Taking Attendance:</strong></ul>
-            <ul>- click on  <button disabled className="py-1 px-1 bg-orange-500 rounded-md shadow-md text-white">Take Attendace</button> </ul> 
+            <ul>- Click on  <button disabled className="py-1 px-1 bg-orange-500 rounded-md shadow-md text-white">Take Attendace</button> </ul> 
             <ul className="py-1">- Select either  <button disabled className="py-1 px-1 bg-green-500 rounded-md shadow-md text-white">Present</button>  OR  <button disabled className="py-1 px-1 bg-red-500 rounded-md shadow-md text-white">Absent</button>  if the student is present or absent</ul>
           </span>
         </li>
@@ -158,7 +186,7 @@ const Description = ({ name, isVisible }) => {
 
           <span>
             <ul><strong>Viewing the Report:</strong></ul>
-            <ul>- click on  <button disabled className="py-1 px-1 bg-indigo-600 rounded-md shadow-md text-white">View Report</button> to visit the report page and view student and class statistics </ul>
+            <ul>- Click on  <button disabled className="py-1 px-1 bg-indigo-600 rounded-md shadow-md text-white">View Report</button> to visit the report page and view student and class statistics </ul>
           </span>
         </li>
       </ul>

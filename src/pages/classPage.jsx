@@ -6,7 +6,8 @@ import axios from "axios";
 import { deleteClass } from "../api";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import Logo from "../components/classPagePic.png";
+import Lottie from 'react-lottie';
+import animationData from "../lotties/classPagePic.json";
 
 function Classespage() {
   const cookies = Cookies.get("Teacher");
@@ -25,6 +26,15 @@ function Classespage() {
     return () => clearTimeout(timer);
   }, []);
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col example-style ">
       <main className="flex-grow bg-gray-100 flex flex-col items-center p-4">
@@ -32,7 +42,10 @@ function Classespage() {
           teacher={teacher}
           isVisible={isVisible}
         />
-        <Description isVisible={isVisible} />
+        <Description 
+          isVisible={isVisible} 
+          defaultOptions={defaultOptions}
+        />
         <div className="flex flex-col md:flex-row md:space-x-4 my-4 w-full max-w-6xl">
           <ClassInfo
             teacher={teacher}
@@ -60,10 +73,17 @@ const Header = ({ teacher, isVisible }) => {
 };
 
 
-const Description = ({ isVisible }) => (
+const Description = ({ isVisible, defaultOptions }) => (
   <div className={`flex flex-col md:flex-row md:items-start space-x-0 md:space-x-4 gap-4 w-full max-w-6xl items-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
     <section className="flex-shrink-0">
-      <img className="w-52 h-52 rounded-lg shadow-md outline-2 outline  md:mt-16" src={Logo} alt="Logo" />
+      <ul className="mt-14">
+        <Lottie
+        options={defaultOptions}
+          height={275}
+          width={275}
+          isClickToPauseDisabled={true}
+        />
+      </ul>
     </section>
     <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full md:text-left my-4">
       <div>
@@ -75,7 +95,7 @@ const Description = ({ isVisible }) => (
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
             </svg>
             <span>
-              <strong>Adding a class:</strong> to add a class, simply click <button disabled className="py-1 px-1 bg-green-500 rounded-md shadow-md text-white">Create Class</button> and type in the name
+              <strong>Adding a Class:</strong> click <button disabled className="py-1 px-1 bg-green-500 rounded-md shadow-md text-white">Create Class</button> and type in the  class name
             </span>
           </li>
           <li className="flex items-center space-x-3 rtl:space-x-reverse py-1 mt-4">
@@ -83,7 +103,7 @@ const Description = ({ isVisible }) => (
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6"/>
             </svg>
             <span>
-              <strong>Deleting a class:</strong> click on <button disabled className="py-1 px-1 bg-cyan-600 rounded-md shadow-md text-white">Manage Class</button> then <button disabled className=" py-1 px-1 bg-red-500 rounded-md shadow-md text-white">Delete Class</button> <strong> *[DELETES CLASS & CLASS DATA]*</strong>
+              <strong>Deleting a Class:</strong> click on <button disabled className="py-1 px-1 bg-cyan-600 rounded-md shadow-md text-white">Manage Class</button> then <button disabled className=" py-1 px-1 bg-red-500 rounded-md shadow-md text-white">Delete Class</button> <strong> *[DELETES CLASS & CLASS DATA]*</strong>
             </span>
           </li>
           <li className="flex items-center space-x-3 rtl:space-x-reverse py-1 mt-4">
@@ -91,7 +111,7 @@ const Description = ({ isVisible }) => (
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
             </svg>
             <span>
-              <strong>Returning to Class view:</strong> click on <button disabled className="py-1 px-1 bg-gray-500 rounded-md shadow-md text-white">My Classes</button> in order to return to the origin class view
+              <strong>Returning to Class View:</strong> click on <button disabled className="py-1 px-1 bg-gray-500 rounded-md shadow-md text-white">My Classes</button> in order to return to the origin class view
             </span>
           </li>
           <li className="flex items-center space-x-3 rtl:space-x-reverse py-1 mt-4">
@@ -99,7 +119,7 @@ const Description = ({ isVisible }) => (
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"/>
             </svg>
             <span>
-              <strong>Viewing Attendace:</strong> click on the class name to bring to single class page, there you can add students, select the date and mark them present or adsent, and view the class/student attendace report
+              <strong>Viewing Attendace:</strong> click on the class name to bring to single class page, there you can add students, select the date and mark them present or absent, and view the class/student attendace report
             </span>
           </li>
         </ul>
