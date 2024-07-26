@@ -23,7 +23,7 @@ const SideMenu = ({ menuOpen, toggleMenu }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-full bg-gray-800 text-white w-64 p-4 transform ${
+      className={`fixed top-0 left-0 h-full bg-cyan-800 text-white w-64 p-4 transform ${
         menuOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform`}
     >
@@ -35,18 +35,18 @@ const SideMenu = ({ menuOpen, toggleMenu }) => {
           width={75}
           isClickToPauseDisabled={true}
         />
-        <Link to="/" className="py-5 flex justify-center text-xl items-center hover:bg-gray-600 hover:rounded-xl">
+        <Link to="/" className="py-5 flex justify-center text-xl items-center hover:bg-cyan-600 hover:rounded-xl">
           Home
         </Link>
         <Link
           to="/classList"
-          className="py-5 flex justify-center items-center text-xl hover:bg-gray-600 hover:rounded-xl"
+          className="py-5 flex justify-center items-center text-xl hover:bg-cyan-600 hover:rounded-xl"
         >
           Class Page
         </Link>
         <button
           onClick={handleLogout}
-          className="py-5 flex justify-center items-center text-xl hover:bg-gray-600 hover:rounded-xl w-full text-left"
+          className="py-5 flex justify-center items-center text-xl hover:bg-cyan-600 hover:rounded-xl w-full text-left"
         >
           Logout
         </button>

@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        Ubuntu: ["Ubuntu", "ubuntu"]
+     },
       keyframes: {
         'fade-in': {
           '0%': { opacity: '0' },

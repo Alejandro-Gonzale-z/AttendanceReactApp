@@ -91,7 +91,7 @@ const Description = ({ isVisible, defaultOptions }) => (
         <br />
         <ul className="list-outside">
           <li className="flex items-center space-x-3 rtl:space-x-reverse py-1 mt-4">
-            <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <svg className="w-10 h-10 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
             </svg>
             <span>
@@ -99,7 +99,7 @@ const Description = ({ isVisible, defaultOptions }) => (
             </span>
           </li>
           <li className="flex items-center space-x-3 rtl:space-x-reverse py-1 mt-4">
-            <svg className="w-6 h-6 text-gray-800 dark:text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <svg className="w-10 h-10 text-gray-800 dark:text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6"/>
             </svg>
             <span>
@@ -107,7 +107,7 @@ const Description = ({ isVisible, defaultOptions }) => (
             </span>
           </li>
           <li className="flex items-center space-x-3 rtl:space-x-reverse py-1 mt-4">
-            <svg className="w-6 h-6 text-gray-800 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <svg className="w-10 h-10 text-gray-800 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
             </svg>
             <span>
@@ -115,7 +115,7 @@ const Description = ({ isVisible, defaultOptions }) => (
             </span>
           </li>
           <li className="flex items-center space-x-3 rtl:space-x-reverse py-1 mt-4">
-            <svg className="w-9 h-9 text-gray-800 dark:text-cyan-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <svg className="w-16 h-16 text-gray-800 dark:text-cyan-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"/>
             </svg>
             <span>
@@ -262,9 +262,9 @@ const ClassInfo = ({ teacher, isVisible }) => {
 const MenuButton = ({ toggleMenu }) => (
   <button
     onClick={toggleMenu}
-    className="fixed top-4 left-4 bg-gray-700 text-white p-2 rounded-md"
+    className="fixed m-1 left-4 bg-cyan-600 text-white p-2 rounded-md text-2xl"
   >
-    ☰
+    <p className="items-center mb-1">☰</p>
   </button>
 );
 

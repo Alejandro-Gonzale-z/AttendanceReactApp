@@ -478,9 +478,9 @@ const StudentInfo = ({ class_id, students, setStudents, option, isVisible, redXO
 const MenuButton = ({ toggleMenu }) => (
   <button
     onClick={toggleMenu}
-    className="fixed top-4 left-4 bg-gray-700 text-white p-2 rounded-md"
+    className="fixed m-1 left-4 bg-cyan-600 text-white p-2 rounded-md text-2xl"
   >
-    ☰
+    <p className="items-center mb-1">☰</p>
   </button>
 );
 

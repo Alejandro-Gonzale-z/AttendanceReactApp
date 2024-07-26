@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Lottie from 'react-lottie';
 import animationData from '../lotties/greenCheckAnimation.json';
+import lPageAnimation from '../lotties/landingPageAnimation.json';
+import helloAnimation from '../lotties/betterHello.json'
 
 function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,6 +20,24 @@ function LandingPage() {
     loop: true,
     autoplay: true,
     animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  const LandingPageAnimation = {
+    loop: true,
+    autoplay: true,
+    animationData: lPageAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  const hello = {
+    loop: true,
+    autoplay: true,
+    animationData: helloAnimation,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice"
     }
@@ -38,7 +58,11 @@ function LandingPage() {
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow bg-gray-100 flex flex-col items-center p-4">
         <Header isVisible={isVisible} />
-        <Description isVisible={isVisible} />
+        <Description 
+          isVisible={isVisible} 
+          LandingPageAnimation={LandingPageAnimation} 
+          hello={hello}
+        />
         <div className="flex flex-col md:flex-row md:space-x-4 my-4 w-full max-w-4xl">
           <LoginForm isVisible={isVisible}/>
           <SignUpForm isVisible={isVisible} defaultOptions={defaultOptions}/>
@@ -54,24 +78,30 @@ function LandingPage() {
 const Header = ({isVisible}) => {
   return (
     <header className={`text-center my-4 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <h1 className="text-3xl font-bold">DigitalAttendanceAppTitle</h1>
+      <h1 className="text-7xl font-extrabold font-Ubuntu mb-5">AttendEasy</h1>
     </header>
   );
 };
 
-const Description = ({isVisible}) => {
+const Description = ({isVisible, LandingPageAnimation, hello }) => {
   return (
     <div className={`flex flex-col items-center md:flex-row md:items-start space-x-0 md:space-x-4 gap-4 w-full max-w-4xl transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <section className="flex-shrink-0">
-        <img className="w-48 h-72 rounded-lg shadow-md outline-2 outline mt-7" src={Logo} alt="Logo" />
-      </section>
-      <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:text-left my-4">
-        <p className="mb-4 font-semibold">
-          Our all-in-one app provides teachers with the ultimate tool for managing student attendance and viewing detailed reports.
-          <br /><br />
-          Here's what you can do:
-        </p>
-        <ul className="list-outside">
+      <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:text-left">
+        <div className="inline-flex">
+          <ul className="">
+            <Lottie
+            options={hello}
+              height={150}
+              width={200}
+              isClickToPauseDisabled={true}
+            />
+          </ul>
+          <p className="font-semibold mt-8">
+            Our all-in-one app provides teachers with the ultimate tool for managing student attendance and viewing detailed reports.
+          </p>
+        </div>
+        <ul className="list-outside mb-4">
+          <p><strong>Here's what you can do: </strong></p><br></br>
           <li className="flex items-center space-x-3 rtl:space-x-reverse py-1">
             <svg className="w-6 h-6 text-gray-800 dark:text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5"/>
@@ -104,6 +134,16 @@ const Description = ({isVisible}) => {
             </svg>
             <span>Improve classroom management.</span>
           </li>
+        </ul>
+      </section>
+      <section className="flex-shrink-0">
+        <ul className="">
+          <Lottie
+          options={LandingPageAnimation}
+            height={375}
+            width={375}
+            isClickToPauseDisabled={true}
+          />
         </ul>
       </section>
     </div>
@@ -160,7 +200,7 @@ const LoginForm = ({isVisible}) => {
         />
         <button
           type="submit"
-          className="bg-gray-700 text-white py-2 rounded hover:bg-gray-500"
+          className="bg-cyan-600 text-white py-2 rounded hover:bg-cyan-700"
         >
           Sign in
         </button>
@@ -227,16 +267,16 @@ const SignUpForm = ({isVisible, defaultOptions}) => {
         />
         <button
           type="submit"
-          className="bg-gray-700 text-white py-2 rounded hover:bg-gray-600 flex items-center justify-center"
+          className="bg-orange-500 text-white py-2 rounded hover:bg-orange-600 flex items-center justify-center"
         >
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <Lottie
               options={defaultOptions}
               height={20} // Ensure the height matches the text
               width={20}
               isClickToPauseDisabled={true}
             />
-          </div>
+          </div> */}
           <span className="ml-2">Create Account</span>
         </button>
       </form>
@@ -247,9 +287,9 @@ const SignUpForm = ({isVisible, defaultOptions}) => {
 const MenuButton = ({ toggleMenu }) => (
   <button
     onClick={toggleMenu}
-    className="fixed top-4 left-4 bg-gray-700 text-white p-2 rounded-md"
+    className="fixed m-1 left-4 bg-cyan-600 text-white p-2 rounded-md text-2xl"
   >
-    ☰
+    <p className="items-center mb-1">☰</p>
   </button>
 );
 
