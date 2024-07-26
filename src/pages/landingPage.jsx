@@ -17,8 +17,8 @@ function LandingPage() {
   const [isVisible, setIsVisible] = useState(false);
 
   const defaultOptions = {
-    loop: true,
-    autoplay: true,
+    loop: false,
+    autoplay: false,
     animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice"
@@ -214,6 +214,7 @@ const SignUpForm = ({isVisible, defaultOptions}) => {
   const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [animationPlaying, setAnimationPlaying] = useState(false);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -228,6 +229,7 @@ const SignUpForm = ({isVisible, defaultOptions}) => {
       setLastName("");
       setEmail("");
       setPassword("");
+      setAnimationPlaying(true);
     } catch (error) {
       console.error("Signup Failed", error);
     }
@@ -269,14 +271,16 @@ const SignUpForm = ({isVisible, defaultOptions}) => {
           type="submit"
           className="bg-orange-500 text-white py-2 rounded hover:bg-orange-600 flex items-center justify-center"
         >
-          {/* <div className="flex items-center">
+          <div className="flex items-center">
             <Lottie
               options={defaultOptions}
               height={20} // Ensure the height matches the text
               width={20}
               isClickToPauseDisabled={true}
+              isStopped={!animationPlaying}
+              isPause={!animationPlaying}
             />
-          </div> */}
+          </div>
           <span className="ml-2">Create Account</span>
         </button>
       </form>
