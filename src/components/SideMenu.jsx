@@ -23,7 +23,7 @@ const SideMenu = ({ menuOpen, toggleMenu }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-full bg-cyan-800 text-white w-64 p-4 transform ${
+      className={`fixed top-0 left-0 h-full bg-cyan-800 text-white w-64 p-4 font-Ubuntu transform ${
         menuOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform`}
     >

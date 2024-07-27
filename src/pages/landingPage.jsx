@@ -85,7 +85,7 @@ const Header = ({isVisible}) => {
 
 const Description = ({isVisible, LandingPageAnimation, hello }) => {
   return (
-    <div className={`flex flex-col items-center md:flex-row md:items-start space-x-0 md:space-x-4 gap-4 w-full max-w-4xl transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`flex flex-col items-center md:flex-row md:items-start space-x-0 md:space-x-4 font-Ubuntu gap-4 w-full max-w-4xl transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <section className="bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:text-left">
         <div className="inline-flex">
           <ul className="">
@@ -175,7 +175,7 @@ const LoginForm = ({isVisible}) => {
   };
 
   return (
-    <section className={`bg-gray-200 p-4 rounded-lg shadow-md w-full text-center md:max-w-md my-2 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <section className={`bg-gray-200 p-4 rounded-lg shadow-md w-full text-center font-Ubuntu md:max-w-md my-2 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <h2 className="text-xl font-bold mb-4">Login</h2>
       {errorMessage && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3 mt-3" role="alert">
@@ -236,7 +236,7 @@ const SignUpForm = ({isVisible, defaultOptions}) => {
   };
 
   return (
-    <section className={`bg-gray-200 p-4 rounded-lg shadow-md w-full md:max-w-md my-2 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <section className={`bg-gray-200 p-4 rounded-lg shadow-md w-full md:max-w-md my-2 font-Ubuntu transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <h2 className="text-xl font-bold mb-4 text-center">Sign-Up</h2>
       <form className="flex flex-col space-y-4" onSubmit={handleSignUp}>
         <input
@@ -274,7 +274,7 @@ const SignUpForm = ({isVisible, defaultOptions}) => {
           <div className="flex items-center">
             <Lottie
               options={defaultOptions}
-              height={20} // Ensure the height matches the text
+              height={20}
               width={20}
               isClickToPauseDisabled={true}
               isStopped={!animationPlaying}

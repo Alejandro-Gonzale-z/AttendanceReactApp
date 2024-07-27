@@ -142,7 +142,7 @@ const ClassList = ({ classData, manageClasses }) => {
   };
 
   return (
-    <ul className="space-y-3">
+    <ul className="space-y-3 font-semibold">
       {classData &&
         classData.map((data) => (
           <li
@@ -209,7 +209,7 @@ const ClassInfo = ({ teacher, isVisible }) => {
   };
 
   return (
-    <div className={`bg-white p-4 rounded-lg shadow-md w-full transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`bg-white p-4 rounded-lg shadow-md w-full font-Ubuntu transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={handleMyClasses}

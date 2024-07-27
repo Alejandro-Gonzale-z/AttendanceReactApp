@@ -131,7 +131,7 @@ function AttendancePage() {
 const Header = ({ name, isVisible }) => {
   return (
     <header className={`text-center my-4 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <h1 className="text-3xl font-medium">Managing Class: <strong>{name}</strong></h1>
+      <h1 className="text-3xl font-Ubuntu font-medium">Managing Class: <strong>{name}</strong></h1>
     </header>
   );
 };
@@ -151,7 +151,7 @@ const CoolAnimation = ({ defaultoptions, isVisible }) => {
 
 const Description = ({ name, isVisible }) => {
   return (
-    <div className={`bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-7xl my-4 items-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-7xl my-4 font-Ubuntu items-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <h3 className="text-lg text-center ">Welcome to the <strong className="font-extrabold">{name}</strong> attendance page!</h3>
       <ul>
         <li className="flex items-center space-x-3 rtl:space-x-reverse py-1 mt-2">
@@ -225,7 +225,7 @@ const Options = ({ handleOptions, isVisible }) => {
   };
 
   return (
-    <div className={`bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-6xl my-4 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-6xl my-4 font-Ubuntu transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <div className="flex justify-between items-center py-4">
         <button
           className={`px-5 py-3 rounded text-white  ${
@@ -256,7 +256,7 @@ const Options = ({ handleOptions, isVisible }) => {
 
 const PickDate = ({ selectedDate, setSelectedDate }) => {
   return (
-    <div className="bg-gray-200 p-2 rounded-lg shadow-md mb-4 text-center w-full space-x-3">
+    <div className="bg-gray-200 p-2 rounded-lg shadow-md mb-4 text-center font-Ubuntu w-full space-x-3">
       <label className="mb-2 text-lg font-extrabold inline-flex justify-center mt-1">Select Date: </label>
       <DatePicker
         selected={selectedDate}
@@ -376,7 +376,7 @@ const StudentInfo = ({ class_id, students, setStudents, option, isVisible, redXO
           setSelectedDate={setSelectedDate}
         />
       )}
-      <div className={`bg-white p-4 rounded-lg shadow-md mb-4 text-center w-full transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`bg-white p-4 rounded-lg shadow-md mb-4 text-center font-Ubuntu w-full transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="flex justify-between items-center py-4">
           <h1 className="text-3xl font-bold">My Students</h1>
         </div>
