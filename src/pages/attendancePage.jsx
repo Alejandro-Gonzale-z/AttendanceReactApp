@@ -22,7 +22,7 @@ function AttendancePage() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { classData } = location.state;
+  const { classData } = location.state || {};
   const [option, setOption] = useState("");
   const [students, setStudents] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
@@ -237,7 +237,7 @@ const Options = ({ handleOptions, isVisible }) => {
         </button>
         <button
           className={`px-5 py-3 rounded text-white  ${
-            attendanceClick ? "bg-green-500" : "bg-orange-500 hover:bg-orange-600"
+            attendanceClick ? "bg-orange-700" : "bg-orange-500 hover:bg-orange-600"
           }`}
           onClick={handleAttendanceClick}
         >
