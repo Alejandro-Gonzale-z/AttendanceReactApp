@@ -194,10 +194,6 @@ const Description = ({ name, isVisible }) => {
   );
 };
 
-//there are three buttons therefore there are 3 options that update the studentInfo component
-//these three options are passed to parent component and then passed to studentInfo component
-//'A' == manage students is clicked
-//'B' == take attendance is clicked
 const Options = ({ handleOptions, isVisible }) => {
   const [manageClick, setManageClick] = useState(false);
   const [attendanceClick, setAttendanceClick] = useState(false);
@@ -260,13 +256,13 @@ const Options = ({ handleOptions, isVisible }) => {
 
 const PickDate = ({ selectedDate, setSelectedDate }) => {
   return (
-    <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4 text-center w-full">
-      <label className="block mb-2 text-lg font-bold">Select Date</label>
+    <div className="bg-gray-200 p-2 rounded-lg shadow-md mb-4 text-center w-full space-x-3">
+      <label className="mb-2 text-lg font-extrabold inline-flex justify-center mt-1">Select Date: </label>
       <DatePicker
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
         dateFormat="MMM dd, yyyy"
-        className="bg-white p-2 rounded border"
+        className="bg-white p-1 rounded-2xl border border-black text-center mt-1 hover:scale-105"
       />
     </div>
   );
@@ -388,7 +384,7 @@ const StudentInfo = ({ class_id, students, setStudents, option, isVisible, redXO
           {students.map((student, index) => (
             <li
               key={student.student_id}
-              className="h-12 flex justify-between items-center bg-white p-2 rounded shadow"
+              className="h-12 flex justify-between items-center bg-white p-2  hover:bg-gray-100 rounded shadow"
             >
               <span>
                 {student.first_name} {student.last_name}
