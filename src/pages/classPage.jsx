@@ -36,7 +36,7 @@ function Classespage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col example-style ">
+    <div className="min-h-screen flex flex-col example-style">
       <main className="flex-grow bg-gray-100 flex flex-col items-center p-4">
         <Header 
           teacher={teacher}

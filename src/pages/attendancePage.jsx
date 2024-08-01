@@ -86,7 +86,7 @@ function AttendancePage() {
   };
 
   if (option === "C") {
-    navigate("/attendanceReport", { state: { class_id: classData.class_id } });
+    navigate("/attendanceReport", { state: { classData: classData } });
   }
 
   return (
