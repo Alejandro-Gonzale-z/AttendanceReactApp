@@ -97,7 +97,6 @@ function AttendancePage() {
             name={classData.class_name}
             isVisible={isVisible}
           />
-          {/* <CoolAnimation defaultoptions={defaultoptions} /> */}
           <Description 
             name={classData.class_name} 
             isVisible={isVisible}

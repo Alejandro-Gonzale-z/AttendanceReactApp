@@ -65,7 +65,7 @@ const Header = ({ teacher, isVisible }) => {
   let last = teacher.last_name;
   return (
     <header className={`text-center my-4 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <h1 className="text-3xl font-bold">
+      <h1 className="text-4xl font-bold">
         Welcome, {first} {last}!
       </h1>
     </header>
@@ -215,7 +215,7 @@ const ClassInfo = ({ teacher, isVisible }) => {
           onClick={handleMyClasses}
           className={`px-4 py-2 rounded ${
             manageClasses
-              ? "bg-green-500 text-white hover:bg-green-600"
+              ? "bg-gray-600 text-white hover:bg-gray-700"
               : "bg-gray-500 hover:bg-gray-600 text-white"
           }`}
         >
