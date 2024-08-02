@@ -383,7 +383,7 @@ const StudentInfo = ({ class_id, students, setStudents, option, isVisible, redXO
           {students.map((student, index) => (
             <li
               key={student.student_id}
-              className="h-12 flex justify-between items-center bg-white p-2  hover:bg-gray-100 rounded shadow"
+              className="h-12 flex justify-between items-center p-2 bg-gray-100 hover:bg-gray-200 rounded shadow"
             >
               <span>
                 {student.first_name} {student.last_name}
