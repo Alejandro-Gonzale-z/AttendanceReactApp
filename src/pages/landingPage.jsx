@@ -78,7 +78,7 @@ function LandingPage() {
 const Header = ({isVisible}) => {
   return (
     <header className={`text-center my-4 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <h1 className="text-7xl font-extrabold font-Ubuntu mb-5">AttendEasy</h1>
+      <h1 className="text-7xl font-extrabold font-Ubuntu mb-5">AttendEazy</h1>
     </header>
   );
 };
